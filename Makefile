@@ -1,0 +1,1 @@
+ppm.o: ppm.c
