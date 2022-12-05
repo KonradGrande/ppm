@@ -61,6 +61,11 @@ void image_pixel_set(image_t *img, int x, int y, color_t pixel) {
   img->pixels[y * img->width + x] = pixel;
 }
 
+color_t image_pixel_get(image_t *img, int x, int y) {
+  assert(y < img->height && x < img->width);
+  return img->pixels[y * img->width + x];
+}
+
 void image_write(char *filename, image_t *img) {
   FILE *f = fopen(filename, "w");
   if (!f) {

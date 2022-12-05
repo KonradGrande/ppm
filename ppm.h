@@ -23,6 +23,7 @@ char *color_format(color_t c);
 image_t *image_init(int width, int height);
 void image_free(image_t *img);
 void image_pixel_set(image_t *img, int x, int y, color_t pixel);
+color_t image_pixel_get(image_t *img, int x, int y);
 void image_write(char *filename, image_t *img);
 image_t *image_read(char *filename);
 void image_eq(image_t *a, image_t *b);
