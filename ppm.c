@@ -57,8 +57,8 @@ void image_free(image_t *img) {
 }
 
 void image_pixel_set(image_t *img, int x, int y, color_t pixel) {
-  assert(y < img->height && x < img->width);
-  img->pixels[y * img->width + x] = pixel;
+  if (y < img->height && x < img->width)
+    img->pixels[y * img->width + x] = pixel;
 }
 
 color_t image_pixel_get(image_t *img, int x, int y) {
