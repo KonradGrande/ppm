@@ -75,6 +75,12 @@ void image_write(char *filename, image_t *img) {
   fclose(f);
 }
 
+#define scan_check(test)                                                       \
+  if (!(test)) {                                                               \
+    fscanf(stderr, "failed to parse the file.\n");                             \
+    exit(EXIT_FAILURE);                                                        \
+  }
+
 image_t *image_read(char *filename) {
   int width, height, max_value;
   char *magic_number;
@@ -86,12 +92,13 @@ image_t *image_read(char *filename) {
     exit(EXIT_FAILURE);
   }
 
-  fscanf(f, "%ms", &magic_number);
+  scan_check(fscanf(f, "%ms", &magic_number) == 1);
+
   if (strcmp(magic_number, MAGIC_NUMBER) == 0) {
-    fscanf(f, "%d %d", &width, &height);
-    fscanf(f, "%d", &max_value);
+    scan_check(fscanf(f, "%d %d", &width, &height) == 2);
+    scan_check(fscanf(f, "%d", &max_value) == 1);
     img = image_init(width, height);
-    fscanf(f, "%s", (char *)img->pixels);
+    scan_check(fscanf(f, "%s", (char *)img->pixels) == 1);
   }
   free(magic_number);
   fclose(f);
