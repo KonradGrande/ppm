@@ -40,7 +40,8 @@ image_t *image_init(int width, int height) {
 
   img->width = width;
   img->height = height;
-  img->pixels = calloc(width * height, sizeof(color_t));
+  img->num_pixels = width * height;
+  img->pixels = calloc(img->num_pixels, sizeof(color_t));
   if (!img->pixels)
     goto error;
 
@@ -71,7 +72,7 @@ void image_write(char *filename, image_t *img) {
   fprintf(f, "%d %d\n", img->width, img->height);
   fprintf(f, "%d\n", 0xff);
 
-  fwrite(img->pixels, sizeof(color_t), img->width * img->height, f);
+  fwrite(img->pixels, sizeof(color_t), img->num_pixels, f);
   fclose(f);
 }
 
@@ -108,6 +109,6 @@ image_t *image_read(char *filename) {
 void image_eq(image_t *a, image_t *b) {
   assert(a->width == b->width);
   assert(a->height == b->height);
-  for (int i = 0; i < a->height * a->width; i++)
+  for (int i = 0; i < a->num_pixels; i++)
     assert(color_eq(a->pixels[i], b->pixels[i]) == true);
 }

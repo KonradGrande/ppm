@@ -12,7 +12,7 @@ typedef struct color {
 } color_t;
 
 typedef struct image {
-  int width, height;
+  int width, height, num_pixels;
   color_t *pixels;
 } image_t;
 
