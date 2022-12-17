@@ -56,13 +56,19 @@ void image_free(image_t *img) {
   free(img);
 }
 
+bool pos_is_in_image(image_t *img, int x, int y) {
+  if (y >= 0 && y < img->height && x >= 0 && x < img->width)
+    return true;
+  return false;
+}
+
 void image_pixel_set(image_t *img, int x, int y, color_t pixel) {
-  if (y < img->height && x < img->width)
+  if (pos_is_in_image(img, x, y))
     img->pixels[y * img->width + x] = pixel;
 }
 
 color_t image_pixel_get(image_t *img, int x, int y) {
-  if (y < img->height && x < img->width)
+  if (pos_is_in_image(img, x, y))
     return img->pixels[y * img->width + x];
   return (color_t){0};
 }
